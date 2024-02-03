@@ -40,9 +40,9 @@ export default function TinderCard(info) {
 
   // Background Image and Details
   const backgroundImageUrl = "/utils/maheeka.jpg";
-  const name = `${cardInfo.firstname} ${cardInfo.lastname}`;
+  const name = `${cardInfo.firstName} ${cardInfo.lastName}`;
   const profession = `${cardInfo.profession}`;
-  let initals = `${cardInfo.firstname[0]}${cardInfo.lastname[0]}`;
+  let initals = `${cardInfo.firstName[0]}${cardInfo.lastName[0]}`;
   initals.toUpperCase()
 
   // Random Colour
