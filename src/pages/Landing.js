@@ -1,17 +1,24 @@
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import React, { useState, useEffect } from 'react';
 import Page from '../components/Page';
+import TinderCards from '../components/TinderCards';
+import AddIcon from '@mui/icons-material/Add';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CenterBox from '../components/CenterBox';
 
 const Landing = ({
     user,
     theme
 }) => {
-    const [text, setText] = useState("");
+    const [viewingMatches, setViewingMatches] = useState(true);
+    const toggleViewing = () => {
+        setViewingMatches(!viewingMatches)
+    }
+    const viewMatches = () => {
 
-    const [x, setX] = useState(1);
+    }
 
     user = {
         firstName: "Kev",
@@ -29,38 +36,70 @@ const Landing = ({
 
     return (
         <Page>
-            <Typography>
-            {`Hello ${user.firstName} ${user.lastName}!`}
-            </Typography>
-            <Button
-                        onClick={() => { }}
-                    >
-                        Browse postings
-                    </Button>
-                    <Button
-                        onClick={() => { }}
-                    >
-                        See messages
-                    </Button>
-            {/* <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    {`Hello ${user.firstName} ${user.lastName}!`}
+            <Grid
+                container
+                spacing={2}
+                padding='1rem'
+                sx={{ minHeight: '100vh' }}
+            >
+                <Grid item xs={1} />
+                <Grid item xs={10}>
+                    <CenterBox>
+                        <Typography paddingBottom='7rem'>
+                            {`Hello ${user.firstName} ${user.lastName}!`}
+                        </Typography>
+                    </CenterBox>
                 </Grid>
-                <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid item xs={1}>
                     <Button
-                        onClick={() => { }}
-                    >
-                        Browse postings
-                    </Button>
+                        startIcon={<SettingsIcon />}
+                    />
                 </Grid>
-                <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button
-                        onClick={() => { }}
-                    >
-                        See messages
-                    </Button>
+
+                {/* Toggle view mode */}
+                <Grid item xs={6}>
+                    <CenterBox>
+                        <Button
+                            onClick={() => toggleViewing()}
+                        >
+                            Change viewing mode
+                        </Button>
+                    </CenterBox>
                 </Grid>
-            </Grid> */}
+
+                {/* Add postings or view matches */}
+                <Grid item xs={6}>
+                    <CenterBox>
+                        {viewingMatches ? (
+                            <Button
+                                onClick={() => viewMatches()}
+                            >
+                                View my matches
+                            </Button>
+                        ) : (
+                            <Button
+                                startIcon={<AddIcon />}
+                                onClick={() => {}}
+                            >
+                                Add Posting
+                            </Button>
+                        )}
+                        
+                    </CenterBox>
+                </Grid>
+
+                {/* Available postings or the user's postings */}
+                <Grid item xs={12}>
+                    <CenterBox>
+                        {viewingMatches ? (
+                            <TinderCards />
+                        ) : (
+                            <TinderCards />
+                        )} 
+                    </CenterBox>
+                </Grid>
+
+            </Grid>
         </Page>
     )
 }
