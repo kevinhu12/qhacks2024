@@ -1,10 +1,15 @@
 import logo from './logo.svg';
 import Home from './pages/Home';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [curPage, setCurPage] = useState("home")
   return (
-    <Home />
+    <>
+      {curPage=="home" ? <Home /> : <div />}
+    </>
+    
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
