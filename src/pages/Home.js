@@ -5,11 +5,15 @@ import Grid from '@mui/material/Grid';
 import { addLandlord } from '../firebase.js';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import AccountService from '../services/AccountService';
 
 const Home = ({
     theme
 }) => {
     const [text, setText] = useState("");
+
+    const accountService = AccountService();
+    const [x, setX] = useState(1);
 
     useEffect(() => {
         async function TestCall() {
@@ -19,6 +23,7 @@ const Home = ({
             })
         } 
         TestCall();
+        setX(accountService.getAccount(x));
     }, []);
 
     return (
@@ -27,7 +32,7 @@ const Home = ({
                 {text?.fact}
             </Typography>
             <Typography>
-                test 2
+                {x}
             </Typography>
             <Grid container>
                 <Grid xs={8}>
