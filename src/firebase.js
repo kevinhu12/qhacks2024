@@ -23,7 +23,7 @@ const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
 // Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 // Get a list of cities from your database
 async function addLandlord() {
