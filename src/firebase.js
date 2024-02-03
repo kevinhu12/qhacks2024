@@ -46,6 +46,7 @@ async function getTenant() {
     const querySnapshot = await getDocs(collection(db, "tenants"));
     
     if (!querySnapshot.empty) {
+      // TODO: hard coded rn
       retval = querySnapshot.docs[0].data();
       console.log("Document data: ", retval);
     }

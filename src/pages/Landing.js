@@ -7,6 +7,7 @@ import TinderCards from '../components/TinderCards';
 import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CenterBox from '../components/CenterBox';
+import { getTenant } from '../firebase.js';
 
 const Landing = ({
     user,
@@ -31,8 +32,19 @@ const Landing = ({
         accountType: "tenant"
     }
 
+    const [cardInfo, setCardInfo] = useState(null);
     useEffect(() => {
-    }, []);
+        const fetchData = async () => {
+          try {
+            const tenantData = await getTenant();
+            setCardInfo(tenantData);
+          } catch (error) {
+            console.error('Error getting tenant data:', error);
+          }
+        };
+    
+        fetchData(); // Call the fetchData function when the component mounts
+      }, []);
 
     return (
         <Page>
@@ -91,11 +103,11 @@ const Landing = ({
                 {/* Available postings or the user's postings */}
                 <Grid item xs={12}>
                     <CenterBox>
-                        {viewingMatches ? (
-                            <TinderCards />
-                        ) : (
-                            <TinderCards />
-                        )} 
+                        {(viewingMatches && cardInfo) ? (
+                            <TinderCards cardInfo={cardInfo} />
+                        ) : cardInfo ? (
+                            <TinderCards cardInfo={cardInfo} />
+                        ) : <></> } 
                     </CenterBox>
                 </Grid>
 
