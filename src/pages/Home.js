@@ -1,6 +1,9 @@
+import * as React from "react";
+import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import { addLandlord } from '../firebase.js';
 
 const Home = ({
     theme
@@ -23,6 +26,13 @@ const Home = ({
                     Test
                 </Grid>
             </Grid>
+            <Button
+                onClick={() => {
+                    addLandlord();
+                }}
+            >
+                Click me
+            </Button>
         </Box>
     )
 }
