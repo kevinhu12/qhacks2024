@@ -1,13 +1,14 @@
 import logo from './logo.svg';
 import Home from './pages/Home';
+import Landing from './pages/Landing';
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [curPage, setCurPage] = useState("home")
+  const [curPage, setCurPage] = useState("homea")
   return (
     <>
-      {curPage=="home" ? <Home /> : <div />}
+      {curPage=="home" ? <Home /> : <Landing />}
     </>
     
     // <div className="App">
