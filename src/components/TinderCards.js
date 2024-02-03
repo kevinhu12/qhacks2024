@@ -10,14 +10,13 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import { Button, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -31,7 +30,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function TinderCard(info) {
-  const {cardInfo} = info;
+  const { cardInfo } = info;
   // Expands Controls
   const [expanded, setExpanded] = React.useState(false);
 
@@ -41,8 +40,18 @@ export default function TinderCard(info) {
 
   // Background Image and Details
   const backgroundImageUrl = "/utils/maheeka.jpg";
-  const name = `${cardInfo.firstname} ${cardInfo.lastname}`
-  const profession = `${cardInfo.profession}`
+  const name = `${cardInfo.firstname} ${cardInfo.lastname}`;
+  const profession = `${cardInfo.profession}`;
+  let initals = `${cardInfo.firstname[0]}${cardInfo.lastname[0]}`;
+  initals.toUpperCase()
+
+  // Random Colour
+  const getRandomDarkColor = () => {
+    const randomHex = Math.floor(Math.random() * 16777215).toString(16); // Generate a random hex color
+    return `#${randomHex}`;
+  };
+  
+  const darkTextColor = getRandomDarkColor();
 
   return (
     <Box
@@ -67,8 +76,8 @@ export default function TinderCard(info) {
         <CardHeader
           sx={{ backgroundColor: "lightblue" }}
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              MN
+            <Avatar sx={{ bgcolor: darkTextColor }} aria-label="recipe">
+              {initals}
             </Avatar>
           }
           action={
@@ -109,10 +118,12 @@ export default function TinderCard(info) {
         </CardActions>
         <CardContent sx={{ backgroundColor: "lightblue" }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            <b>About Me: </b>{cardInfo.bio}
+            <b>About Me: </b>
+            {cardInfo.bio}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Rating: </b>{cardInfo.rating}/10
+            <b>Rating: </b>
+            {cardInfo.rating}/10
           </Typography>
           <Typography variant="body2" color="text.secondary">
             <b>Price Preference: </b>${cardInfo.ppl} - ${cardInfo.pph} CAD
