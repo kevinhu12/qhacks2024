@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc, getDocs } from "firebase/firestore"; 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,7 +25,7 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
-// Get a list of cities from your database
+// Add a landlord into the database
 async function addLandlord() {
   try {
     const docRef = await addDoc(collection(db, "landlord"), {
@@ -39,4 +39,21 @@ async function addLandlord() {
   }  
 }
 
-export { addLandlord };
+// Get the next tenant
+async function getTenant() {
+  let retval;
+  try {
+    const querySnapshot = await getDocs(collection(db, "tenants"));
+    console.log(querySnapshot.docs);
+    
+    if (!querySnapshot.empty) {
+      retval = querySnapshot.docs[0].data();
+      console.log("Document data: ", retval);
+    }
+  } catch (e) {
+    console.error("Error getting document: ", e);
+  }
+  return retval;
+}
+
+export { addLandlord, getTenant };
