@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 const Home = ({
     theme
 }) => {
-    let x = 1 + 3;
+    let x = 3 + 3;
 
     return (
         <Box>
