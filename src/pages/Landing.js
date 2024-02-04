@@ -57,7 +57,7 @@ const Landing = ({
                 <Grid item xs={1} />
                 <Grid item xs={10}>
                     <CenterBox>
-                        <Typography color='primary' paddingBottom='7rem'>
+                        <Typography variant='h2' color='primary' paddingBottom='1rem'>
                             {`Hello ${user.firstName} ${user.lastName}!`}
                         </Typography>
                     </CenterBox>
@@ -69,27 +69,28 @@ const Landing = ({
                 </Grid>
 
                 {/* Toggle view mode */}
-                <Grid item xs={6}>
-                    <CenterBox>
-                        <Button
-                            onClick={() => toggleViewing()}
-                        >
-                            Change viewing mode
-                        </Button>
-                    </CenterBox>
+                <Grid item xs={6} display='flex' justifyContent='right' paddingRight='0.5rem'>
+                    <Button
+                        variant='outlined'
+                        onClick={() => toggleViewing()}
+                    >
+                        Change viewing mode
+                    </Button>
                 </Grid>
 
                 {/* Add postings or view matches */}
-                <Grid item xs={6}>
+                <Grid item xs={6} display='flex' justifyContent='left' paddingLeft='0.5rem'>
                     <CenterBox>
                         {viewingMatches ? (
                             <Button
+                                variant='outlined'
                                 onClick={() => viewMatches()}
                             >
                                 View my matches
                             </Button>
                         ) : (
                             <Button
+                                variant='outlined'
                                 startIcon={<AddIcon />}
                                 onClick={() => {}}
                             >
@@ -104,9 +105,15 @@ const Landing = ({
                 <Grid item xs={12}>
                     <CenterBox>
                         {(viewingMatches && cardInfo) ? (
-                            <TinderCards cardInfo={cardInfo} />
+                            <>
+                                <Typography color='primary' padding='0.75rem'>Recommended Matches</Typography>
+                                <TinderCards cardInfo={cardInfo} />
+                            </>
                         ) : cardInfo ? (
-                            <TinderCards cardInfo={cardInfo} />
+                            <>
+                                <Typography color='primary' padding='0.75rem'>Your Active Postings</Typography>
+                                <TinderCards cardInfo={cardInfo} />
+                            </>
                         ) : <></> } 
                     </CenterBox>
                 </Grid>
