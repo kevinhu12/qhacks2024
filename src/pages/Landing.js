@@ -1,126 +1,148 @@
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import React, { useState, useEffect } from 'react';
-import Page from '../components/Page';
-import TinderCards from '../components/TinderCards';
-import AddIcon from '@mui/icons-material/Add';
-import SettingsIcon from '@mui/icons-material/Settings';
-import CenterBox from '../components/CenterBox';
-import { getTenant } from '../firebase.js';
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import React, { useState, useEffect } from "react";
+import Page from "../components/Page";
+import TinderCards from "../components/TinderCards";
+import AddIcon from "@mui/icons-material/Add";
+import SettingsIcon from "@mui/icons-material/Settings";
+import CenterBox from "../components/CenterBox";
+import { getTenant } from "../firebase.js";
 
-const Landing = ({
-    user,
-    setPage
-}) => {
-    const [viewingMatches, setViewingMatches] = useState(true);
-    const toggleViewing = () => {
-        setViewingMatches(!viewingMatches);
-    }
-    const viewMatches = () => {
-        setPage("matches");
-    }
+const Landing = ({ user, setPage }) => {
+  // Doc Id
+  const [docId, setDocId] = useState(0);
 
-    user = {
-        firstName: "Kev",
-        age: 15,
-        job: "dying",
-        gender: "all",
-        username: "idk",
-        lastName: "in",
-        email: "ayo.com",
-        accountType: "tenant"
-    }
+  // Viewing Matches
+  const [viewingMatches, setViewingMatches] = useState(true);
+  const toggleViewing = () => {
+    setViewingMatches(!viewingMatches);
+  };
+  const viewMatches = () => {
+    setPage("matches");
+  };
 
-    const [cardInfo, setCardInfo] = useState(null);
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const tenantData = await getTenant();
-            setCardInfo(tenantData);
-          } catch (error) {
-            console.error('Error getting tenant data:', error);
-          }
-        };
-    
-        fetchData(); // Call the fetchData function when the component mounts
-      }, []);
+  user = {
+    firstName: "Kev",
+    age: 15,
+    job: "dying",
+    gender: "all",
+    username: "idk",
+    lastName: "in",
+    email: "ayo.com",
+    accountType: "tenant",
+  };
 
-    return (
-        <Page>
-            <Grid
-                container
-                spacing={2}
-                padding='1rem'
-                sx={{ minHeight: '100vh' }}
-            >
-                <Grid item xs={1} />
-                <Grid item xs={10}>
-                    <CenterBox>
-                        <Typography variant='h2' color='primary' paddingBottom='1rem'>
-                            {`Hello ${user.firstName} ${user.lastName}!`}
-                        </Typography>
-                    </CenterBox>
-                </Grid>
-                <Grid item xs={1}>
-                    <Button
-                        startIcon={<SettingsIcon />}
-                    />
-                </Grid>
+  const [cardInfo, setCardInfo] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tenantData = await getTenant(docId);
+        setCardInfo(tenantData);
 
-                {/* Toggle view mode */}
-                <Grid item xs={6} display='flex' justifyContent='right' paddingRight='0.5rem'>
-                    <Button
-                        variant='outlined'
-                        onClick={() => toggleViewing()}
-                    >
-                        Change viewing mode
-                    </Button>
-                </Grid>
+        const incrementedDocId = docId + 1;
+        setDocId(incrementedDocId);
+      } catch (error) {
+        console.error("Error getting tenant data:", error);
+      }
+    };
 
-                {/* Add postings or view matches */}
-                <Grid item xs={6} display='flex' justifyContent='left' paddingLeft='0.5rem'>
-                    <CenterBox>
-                        {viewingMatches ? (
-                            <Button
-                                variant='outlined'
-                                onClick={() => viewMatches()}
-                            >
-                                View my matches
-                            </Button>
-                        ) : (
-                            <Button
-                                variant='outlined'
-                                startIcon={<AddIcon />}
-                                onClick={() => {}}
-                            >
-                                Add Posting
-                            </Button>
-                        )}
-                        
-                    </CenterBox>
-                </Grid>
+    fetchData(); // Call the fetchData function when the component mounts
+  }, []);
 
-                {/* Available postings or the user's postings */}
-                <Grid item xs={12}>
-                    <CenterBox>
-                        {(viewingMatches && cardInfo) ? (
-                            <>
-                                <Typography color='primary' padding='0.75rem'>Recommended Matches</Typography>
-                                <TinderCards cardInfo={cardInfo} />
-                            </>
-                        ) : cardInfo ? (
-                            <>
-                                <Typography color='primary' padding='0.75rem'>Your Active Postings</Typography>
-                                <TinderCards cardInfo={cardInfo} />
-                            </>
-                        ) : <></> } 
-                    </CenterBox>
-                </Grid>
+  // Callback function to be passed to TinderCard
+  const handleSwipeCallback = async (newDocumentId) => {
+    const tenantData = await getTenant(newDocumentId);
+    setCardInfo(tenantData);
+    const incrementedDocId = docId + 1;
+    setDocId(incrementedDocId);
+  };
+  return (
+    <Page>
+      <Grid container spacing={2} padding="1rem" sx={{ minHeight: "100vh" }}>
+        <Grid item xs={1} />
+        <Grid item xs={10}>
+          <CenterBox>
+            <Typography variant="h2" color="primary" paddingBottom="1rem">
+              {`Hello ${user.firstName} ${user.lastName}!`}
+            </Typography>
+          </CenterBox>
+        </Grid>
+        <Grid item xs={1}>
+          <Button startIcon={<SettingsIcon />} />
+        </Grid>
 
-            </Grid>
-        </Page>
-    )
-}
+        {/* Toggle view mode */}
+        <Grid
+          item
+          xs={6}
+          display="flex"
+          justifyContent="right"
+          paddingRight="0.5rem"
+        >
+          <Button variant="outlined" onClick={() => toggleViewing()}>
+            Change viewing mode
+          </Button>
+        </Grid>
+
+        {/* Add postings or view matches */}
+        <Grid
+          item
+          xs={6}
+          display="flex"
+          justifyContent="left"
+          paddingLeft="0.5rem"
+        >
+          <CenterBox>
+            {viewingMatches ? (
+              <Button variant="outlined" onClick={() => viewMatches()}>
+                View my matches
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={() => {}}
+              >
+                Add Posting
+              </Button>
+            )}
+          </CenterBox>
+        </Grid>
+
+        {/* Available postings or the user's postings */}
+        <Grid item xs={12}>
+          <CenterBox>
+            {viewingMatches && cardInfo ? (
+              <>
+                <Typography color="primary" padding="0.75rem">
+                  Recommended Matches
+                </Typography>
+                <TinderCards
+                  cardInfo={cardInfo}
+                  docId={docId}
+                  onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
+                />
+              </>
+            ) : cardInfo ? (
+              <>
+                <Typography color="primary" padding="0.75rem">
+                  Your Active Postings
+                </Typography>
+                <TinderCards
+                  cardInfo={cardInfo}
+                  docId={docId}
+                  onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+          </CenterBox>
+        </Grid>
+      </Grid>
+    </Page>
+  );
+};
 
 export default Landing;

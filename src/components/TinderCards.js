@@ -17,6 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import { Button } from "@mui/material";
+import { getTenant } from "../firebase";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -29,11 +30,14 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function TinderCard(info) {
-  const { cardInfo } = info;
+const TinderCards = ({
+  cardInfo,
+  docId,
+  onSwipeRight
+}) => {
+
   // Expands Controls
   const [expanded, setExpanded] = React.useState(false);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -43,25 +47,34 @@ export default function TinderCard(info) {
   const name = `${cardInfo.firstName} ${cardInfo.lastName}`;
   const profession = `${cardInfo.profession}`;
   let initals = `${cardInfo.firstName[0]}${cardInfo.lastName[0]}`;
-  initals.toUpperCase()
+  initals.toUpperCase();
 
   // Random Colour
   const getRandomDarkColor = () => {
     const randomHex = Math.floor(Math.random() * 16777215).toString(16); // Generate a random hex color
     return `#${randomHex}`;
   };
-  
   const darkTextColor = getRandomDarkColor();
+
+  // Handle Right Swipe
+  const handleRightSwipe = () => {
+    // Trigger the callback with the updated documentId
+    onSwipeRight(docId);
+  };
 
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
-      <Button sx={{ height: 400, width: 75 }} variant="contained">
+      <Button
+        sx={{ height: 400, width: 75 }}
+        onClick={handleRightSwipe}
+        variant="contained"
+      >
         <KeyboardDoubleArrowLeftIcon />
       </Button>
       <Card
@@ -145,9 +158,15 @@ export default function TinderCard(info) {
           </CardContent>
         </Collapse>
       </Card>
-      <Button sx={{ height: 400, width: 75 }} variant="contained">
+      <Button
+        sx={{ height: 400, width: 75 }}
+        onClick={handleRightSwipe}
+        variant="contained"
+      >
         <KeyboardDoubleArrowRightIcon />
       </Button>
     </Box>
   );
 }
+
+export default TinderCards;

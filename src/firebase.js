@@ -50,14 +50,13 @@ async function createTenantListing(tenantListing) {
 }
 
 // Get the next tenant
-async function getTenant() {
+async function getTenant(docId) {
   let retval;
   try {
     const querySnapshot = await getDocs(collection(db, "tenants"));
     
     if (!querySnapshot.empty) {
-      // TODO: hard coded rn
-      retval = querySnapshot.docs[0].data();
+      retval = querySnapshot.docs[docId].data();
       console.log("Document data: ", retval);
     }
   } catch (e) {
