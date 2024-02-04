@@ -14,6 +14,8 @@ import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import Modal from '@mui/material/Modal';
 
+import { createTenantListing } from '../firebase.js'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -49,7 +51,7 @@ export default function CreateTenantListingForm() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const TenantListing = {
+    const tenantListing = {
       accountId: 'skXzvrN9fXUmVF2I4jWZ',
       priceLow: data.get('price-low'),
       priceHigh: data.get('price-high'),
@@ -64,6 +66,7 @@ export default function CreateTenantListingForm() {
       stayLength: data.get('stay-length'),
       bio: data.get('bio')
     }
+    createTenantListing(tenantListing);
   };
 
   const handlePriceRange = (event, newValue) => {
