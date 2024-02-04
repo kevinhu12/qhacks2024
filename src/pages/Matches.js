@@ -9,12 +9,12 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import CenterBox from '../components/CenterBox';
 
 const Matches = ({
-    thisShouldBeCards,
+    setPage,
     theme
 }) => {
     const [cards, setCards] = useState([]);
     const goBack = () => {
-
+        setPage('landing');
     }
 
     useEffect(() => {

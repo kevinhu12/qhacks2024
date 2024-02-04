@@ -11,14 +11,14 @@ import { getTenant } from '../firebase.js';
 
 const Landing = ({
     user,
-    theme
+    setPage
 }) => {
     const [viewingMatches, setViewingMatches] = useState(true);
     const toggleViewing = () => {
-        setViewingMatches(!viewingMatches)
+        setViewingMatches(!viewingMatches);
     }
     const viewMatches = () => {
-
+        setPage("matches");
     }
 
     user = {
@@ -57,7 +57,7 @@ const Landing = ({
                 <Grid item xs={1} />
                 <Grid item xs={10}>
                     <CenterBox>
-                        <Typography paddingBottom='7rem'>
+                        <Typography color='primary' paddingBottom='7rem'>
                             {`Hello ${user.firstName} ${user.lastName}!`}
                         </Typography>
                     </CenterBox>
