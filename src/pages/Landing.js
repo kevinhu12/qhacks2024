@@ -7,8 +7,10 @@ import TinderCards from "../components/TinderCards";
 import AddIcon from "@mui/icons-material/Add";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CenterBox from "../components/CenterBox";
-import { getTenant } from "../firebase.js";
+import { getAsset } from "../firebase.js";
 import CreateTenantListingForm from "../components/CreateTenantListingForm.js";
+import axios from 'axios';
+import TinderCards2 from '../components/TinderCards2.js';
 
 const Landing = ({ user, setPage }) => {
   // Doc Id
@@ -50,7 +52,7 @@ const Landing = ({ user, setPage }) => {
         } 
         GetMatches();
 
-        const tenantData = await getTenant(docId);
+        const tenantData = viewingMatches ? await getAsset(docId, "houses") : await getAsset(docId, "tenants");
         setCardInfo(tenantData);
 
         const incrementedDocId = docId + 1;
@@ -64,9 +66,9 @@ const Landing = ({ user, setPage }) => {
   }, []);
 
   // Callback function to be passed to TinderCard
-  const handleSwipeCallback = async (newDocumentId) => {
-    const tenantData = await getTenant(newDocumentId);
-    setCardInfo(tenantData);
+  const handleSwipeCallback = async (newDocumentId, type) => {
+    const assetData = await getAsset(newDocumentId, type);
+    setCardInfo(assetData);
     const incrementedDocId = docId + 1;
     setDocId(incrementedDocId);
   };
@@ -131,10 +133,10 @@ const Landing = ({ user, setPage }) => {
                 <Typography color="primary" padding="0.75rem">
                   Recommended Matches
                 </Typography>
-                <TinderCards
+                <TinderCards2
                   cardInfo={cardInfo}
                   docId={docId}
-                  onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
+                  onSwipeRight={(newDocId, type) => handleSwipeCallback(newDocId, type)}
                 />
               </>
             ) : cardInfo ? (
@@ -145,7 +147,7 @@ const Landing = ({ user, setPage }) => {
                 <TinderCards
                   cardInfo={cardInfo}
                   docId={docId}
-                  onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
+                  onSwipeRight={(newDocId, type) => handleSwipeCallback(newDocId, type)}
                 />
               </>
             ) : (

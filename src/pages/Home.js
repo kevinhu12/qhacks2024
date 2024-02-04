@@ -2,7 +2,6 @@ import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import { addLandlord, getTenant } from '../firebase.js';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import AccountService from '../services/AccountService';
@@ -29,18 +28,18 @@ const Home = ({
 
     const [cardInfo, setCardInfo] = useState(null);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const tenantData = await getTenant();
-          setCardInfo(tenantData);
-        } catch (error) {
-          console.error('Error getting tenant data:', error);
-        }
-      };
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     try {
+    //       const tenantData = await getTenant();
+    //       setCardInfo(tenantData);
+    //     } catch (error) {
+    //       console.error('Error getting tenant data:', error);
+    //     }
+    //   };
   
-      fetchData(); // Call the fetchData function when the component mounts
-    }, []);
+    //   fetchData(); // Call the fetchData function when the component mounts
+    // }, []);
 
     return (
         <Box>
