@@ -29,7 +29,7 @@ const MatchCards = ({
     setExpanded(!expanded);
   };
 
-  const backgroundImageUrl = "/utils/maheeka.jpg";
+  const backgroundImageUrl = "/utils/house1.jpeg";
   const address = `${cardInfo.address}`;
   const location = `${cardInfo.location}`;
   const bio = `${cardInfo.bio}`;
