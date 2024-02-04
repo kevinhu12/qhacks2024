@@ -59,7 +59,7 @@ const Landing = ({ user, setPage }) => {
   };
   return (
     <Page>
-      <Grid container spacing={2} padding="1rem" sx={{ minHeight: "100vh" }}>
+      <Grid container spacing={2} padding="1rem">
         <Grid item xs={1} />
         <Grid item xs={10}>
           <CenterBox>
