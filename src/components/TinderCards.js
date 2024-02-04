@@ -58,17 +58,16 @@ export default function TinderCard(info) {
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
+        alignItems: "center"
       }}
     >
-      <Button sx={{ height: 800, width: 100 }} variant="contained">
+      <Button sx={{ height: 400, width: 75 }} variant="contained">
         <KeyboardDoubleArrowLeftIcon />
       </Button>
       <Card
         sx={{
-          maxWidth: 600,
-          height: 800,
+          maxWidth: 400,
+          height: 400,
           backgroundImage: `url(${backgroundImageUrl})`,
           backgroundSize: "cover",
         }}
@@ -93,29 +92,13 @@ export default function TinderCard(info) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "70%",
+            height: "50%",
             width: "100%",
             border: "none",
           }}
           component="img"
           height="flex"
         />
-        <CardActions sx={{ backgroundColor: "white" }} disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
         <CardContent sx={{ backgroundColor: "lightblue" }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             <b>About Me: </b>
@@ -162,7 +145,7 @@ export default function TinderCard(info) {
           </CardContent>
         </Collapse>
       </Card>
-      <Button sx={{ height: 800, width: 100 }} variant="contained">
+      <Button sx={{ height: 400, width: 75 }} variant="contained">
         <KeyboardDoubleArrowRightIcon />
       </Button>
     </Box>
