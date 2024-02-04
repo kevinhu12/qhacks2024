@@ -131,10 +131,10 @@ const TinderCards2 = ({
           </Typography>
           <Typography variant="body2" color="text.secondary">
             <b>Rating:  </b>
-            {rating} / 10
+            {rating}/10
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Price: </b>{price} CAD
+            <b>Price: </b>${price} CAD
           </Typography>
         </CardContent>
       </Card>

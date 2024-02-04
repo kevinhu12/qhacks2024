@@ -45,13 +45,18 @@ const MatchCards = ({
   return (
     <Box
       sx={{
-        display: "flex"
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        border: "5px solid black",
+        borderRadius: "2px",
       }}
     >
       <Card
         sx={{
-          maxWidth: 400,
-          height: 400,
+          flexDirection:'column',
+          minWidth: 400,
+          height: "100%",
           backgroundImage: `url(${backgroundImageUrl})`,
           backgroundSize: "cover",
         }}
@@ -63,6 +68,8 @@ const MatchCards = ({
               {'H'}
             </Avatar>
           }
+          title={address}
+          subheader={location}
           action={
             <IconButton aria-label="settings">
               <MoreVertIcon />
@@ -74,24 +81,25 @@ const MatchCards = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "50%",
+            height: 400,
             width: "100%",
             border: "none",
           }}
           component="img"
           height="flex"
         />
+                          <Box sx={{ flexGrow: 5 }}>
+    {/* This div will take the remaining space */}
+  </Box>
         <CardContent sx={{ backgroundColor: "lightblue" }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            <b>Address: </b>
-            {address}
+            <b>Summary: </b>{bio}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <b>Location: </b>
-            {location}
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            <b>Price: </b>${price} CAD
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <b>Price: </b>{price} CAD
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            <b>Rating: </b>6.2/10
           </Typography>
         </CardContent>
       </Card>

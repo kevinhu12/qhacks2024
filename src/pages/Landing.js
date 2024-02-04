@@ -32,12 +32,12 @@ const Landing = ({ user, setPage }) => {
   };
 
   user = {
-    firstName: "Kev",
+    firstName: "Maheeka",
     age: 15,
     job: "dying",
     gender: "all",
     username: "idk",
-    lastName: "in",
+    lastName: "Nanayakkara",
     email: "ayo.com",
     accountType: "tenant",
   };
@@ -120,8 +120,8 @@ const Landing = ({ user, setPage }) => {
         <Grid item xs={1} />
         <Grid item xs={10}>
           <CenterBox>
-            <Typography variant="h2" color="primary" paddingBottom="1rem">
-              {`Hello ${user.firstName} ${user.lastName}!`}
+            <Typography variant="h2" color="primary" paddingBottom="1rem" paddingTop="1rem">
+              {`Hello, ${user.firstName} ${user.lastName}!`}
             </Typography>
           </CenterBox>
         </Grid>
