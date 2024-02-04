@@ -10,7 +10,8 @@ const Page = styled(Box)(({
     // alignItems: 'center',
     width: '100%', 
     height: '100%', 
-    backgroundColor: '#002366'
+    backgroundColor: '#002366',
+    minHeight: '100vh'
 }));
 
 export default Page;
