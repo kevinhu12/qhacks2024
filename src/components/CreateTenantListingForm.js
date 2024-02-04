@@ -69,6 +69,7 @@ const CreateTenantListingForm = ({
       bio: data.get('bio')
     }
     createTenantListing(tenantListing);
+    handleClose();
   };
 
   const handlePriceRange = (event, newValue) => {
