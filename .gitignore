@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+/flask_server/__pycache__
+/flask_server/Lib
+/flask_server/pyvenv.cfg
 
 # testing
 /coverage
