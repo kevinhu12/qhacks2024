@@ -50,10 +50,43 @@ const Landing = ({ user, setPage }) => {
       try {
 
         // async function GetMatches() {
-        //     axios.get(`https://catfact.ninja/fact`)
-        //     .then(res => {
-        //         setMatches(res.data);
-        //     })
+        //   axios.get(`https://127.0.0.1:5000`).then(res => { setMatches(res.data) })
+        //     // axios.post(
+        //     //   `https://127.0.0.1:5000/match`, 
+        //     //   {
+        //     //     TenantListing: {
+        //     //       rentPrice: 1000,
+        //     //       squareFeet: 1000,
+        //     //       smoker: false,
+        //     //       pets: false,
+        //     //       furnished: true
+        //     //     },
+        //     //     Landlords: [
+        //     //       {
+        //     //         rentPrice: 1001,
+        //     //         squareFeet: 1001,
+        //     //         smoker: false,
+        //     //         pets: false,
+        //     //         furnished: false
+        //     //       },
+        //     //       {
+        //     //         rentPrice: 1002,
+        //     //         squareFeet: 1002,
+        //     //         smoker: false,
+        //     //         pets: true,
+        //     //         furnished: false
+        //     //       }
+        //     //     ]
+        //     //   },
+        //     //   {
+        //     //     headers: {
+        //     //       'Content-Type': 'application/json'
+        //     //     }
+        //     //   }
+        //     // )
+        //     // .then(res => {
+        //     //     setMatches(res.data);
+        //     // })
         // } 
         // GetMatches();
 
