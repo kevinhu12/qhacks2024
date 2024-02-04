@@ -11,6 +11,7 @@ import { getAsset } from "../firebase.js";
 import CreateTenantListingForm from "../components/CreateTenantListingForm.js";
 import axios from 'axios';
 import TinderCards2 from '../components/TinderCards2.js';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Landing = ({ user, setPage }) => {
   // Doc Id
@@ -151,7 +152,7 @@ const Landing = ({ user, setPage }) => {
         >
           <CenterBox>
             {viewingMatches ? (
-              <Button variant="outlined" onClick={() => viewMatches()}>
+              <Button startIcon={<SearchIcon />} variant="outlined" onClick={() => viewMatches() }>
                 View my matches
               </Button>
             ) : (

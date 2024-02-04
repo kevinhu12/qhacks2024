@@ -36,7 +36,7 @@ const TinderCards = ({
   onSwipeRight,
   type
 }) => {
-
+  
   // Expands Controls
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -44,9 +44,12 @@ const TinderCards = ({
   };
 
   // Background Image and Details
-  const backgroundImageUrl = ["/utils/maheeka.jpg", "/utils/kevin.jpg"];
+  const backgroundImageUrl = "/utils/maheeka.jpg";
   const name = `${cardInfo.firstName} ${cardInfo.lastName}`;
+  console.log(name);
   const profession = `${cardInfo.profession}`;
+  const location = `${cardInfo.location}`;
+  const price = `${cardInfo.price}`;
   let initals = `${cardInfo.firstName[0]}${cardInfo.lastName[0]}`;
   initals.toUpperCase();
 
@@ -72,7 +75,7 @@ const TinderCards = ({
       }}
     >
       <Button
-        sx={{ height: 550, width: 75 }}
+        sx={{ height: 500, width: 75 }}
         onClick={handleRightSwipe}
         variant="contained"
       >
@@ -80,10 +83,11 @@ const TinderCards = ({
       </Button>
       <Card
         sx={{
+          flexDirection:'column',
           maxWidth: 400,
-          height: 550,
-          backgroundImage: `url(${backgroundImageUrl[docId - 1]})`,
-          backgroundSize: "cover",
+          height: "100%",
+          backgroundImage: `url(${backgroundImageUrl})`,
+          backgroundSize: "contain",
         }}
       >
         <CardHeader
@@ -106,29 +110,35 @@ const TinderCards = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "60%",
+            minHeight: 300,
             width: "100%",
             border: "none",
           }}
           component="img"
           height="flex"
         />
-        <CardContent sx={{ backgroundColor: "lightblue", marginTop: 'auto' }}>
+          <Box sx={{ flexGrow: 5 }}>
+    {/* This div will take the remaining space */}
+  </Box>
+        <CardContent sx={{ backgroundColor: "lightblue" }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             <b>About Me: </b>
             {cardInfo.bio}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <b>Location Interested: </b>{location}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             <b>Rating: </b>
             {cardInfo.rating}/10
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Price Preference: </b>${cardInfo.ppl} - ${cardInfo.pph} CAD
+            <b>Price Preference: </b>${price} CAD
           </Typography>
         </CardContent>
       </Card>
       <Button
-        sx={{ height: 550, width: 75 }}
+        sx={{ height: 500, width: 75 }}
         onClick={handleRightSwipe}
         variant="contained"
       >
