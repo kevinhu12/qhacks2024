@@ -57,14 +57,13 @@ const Landing = ({ user, setPage }) => {
     const incrementedDocId = docId + 1;
     setDocId(incrementedDocId);
   };
-
   return (
     <Page>
       <Grid container spacing={2} padding="1rem" sx={{ minHeight: "100vh" }}>
         <Grid item xs={1} />
         <Grid item xs={10}>
           <CenterBox>
-            <Typography color="primary" paddingBottom="7rem">
+            <Typography variant="h2" color="primary" paddingBottom="1rem">
               {`Hello ${user.firstName} ${user.lastName}!`}
             </Typography>
           </CenterBox>
@@ -74,19 +73,37 @@ const Landing = ({ user, setPage }) => {
         </Grid>
 
         {/* Toggle view mode */}
-        <Grid item xs={6}>
-          <CenterBox>
-            <Button onClick={() => toggleViewing()}>Change viewing mode</Button>
-          </CenterBox>
+        <Grid
+          item
+          xs={6}
+          display="flex"
+          justifyContent="right"
+          paddingRight="0.5rem"
+        >
+          <Button variant="outlined" onClick={() => toggleViewing()}>
+            Change viewing mode
+          </Button>
         </Grid>
 
         {/* Add postings or view matches */}
-        <Grid item xs={6}>
+        <Grid
+          item
+          xs={6}
+          display="flex"
+          justifyContent="left"
+          paddingLeft="0.5rem"
+        >
           <CenterBox>
             {viewingMatches ? (
-              <Button onClick={() => viewMatches()}>View my matches</Button>
+              <Button variant="outlined" onClick={() => viewMatches()}>
+                View my matches
+              </Button>
             ) : (
-              <Button startIcon={<AddIcon />} onClick={() => {}}>
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={() => {}}
+              >
                 Add Posting
               </Button>
             )}
@@ -97,11 +114,27 @@ const Landing = ({ user, setPage }) => {
         <Grid item xs={12}>
           <CenterBox>
             {viewingMatches && cardInfo ? (
-              <TinderCards
-                cardInfo={cardInfo}
-                docId={docId}
-                onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
-              />
+              <>
+                <Typography color="primary" padding="0.75rem">
+                  Recommended Matches
+                </Typography>
+                <TinderCards
+                  cardInfo={cardInfo}
+                  docId={docId}
+                  onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
+                />
+              </>
+            ) : cardInfo ? (
+              <>
+                <Typography color="primary" padding="0.75rem">
+                  Your Active Postings
+                </Typography>
+                <TinderCards
+                  cardInfo={cardInfo}
+                  docId={docId}
+                  onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
+                />
+              </>
             ) : (
               <></>
             )}

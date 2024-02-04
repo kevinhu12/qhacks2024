@@ -7,6 +7,7 @@ import TinderCards from '../components/TinderCards';
 import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CenterBox from '../components/CenterBox';
+import MatchCards from '../components/MatchCards';
 
 const Matches = ({
     setPage,
@@ -39,10 +40,9 @@ const Matches = ({
                 {/* Toggle view mode */}
                 {cards.map((card) => (
                     <Grid item xs={12}>
-
+                        <MatchCards info={card} />
                     </Grid>
                 ))}
-
             </Grid>
         </Page>
     )

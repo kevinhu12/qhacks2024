@@ -39,6 +39,16 @@ async function addLandlord() {
   }  
 }
 
+// Create Tenant listing in database
+async function createTenantListing(tenantListing) {
+  try {
+    const docRef = await addDoc(collection(db, "tenant-listings"), tenantListing)
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
 // Get the next tenant
 async function getTenant(docId) {
   let retval;
@@ -55,4 +65,4 @@ async function getTenant(docId) {
   return retval;
 }
 
-export { addLandlord, getTenant };
+export { addLandlord, createTenantListing, getTenant};
