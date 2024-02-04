@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import Home from './pages/Home';
-import CreateTenantListingPage from './pages/CreateTenantListingPage';
 import Landing from './pages/Landing';
 import Matches from './pages/Matches';
 import React, { useState, useEffect } from 'react';
@@ -8,6 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import './App.css';
+import CreateTenantListingForm from './components/CreateTenantListingForm';
 
 function App() {
   const [curPage, setCurPage] = useState("landing")
@@ -17,6 +17,7 @@ function App() {
       {curPage=="home" ? <Home /> : 
         curPage=='landing' ? <Landing setPage={(x) => setCurPage(x)} /> :
         curPage=='matches' ? <Matches setPage={(x) => setCurPage(x)} /> :
+        curPage=='listings' ? <CreateTenantListingForm setPage={(x) => setCurPage(x)} /> :
         <Home />
       }
     </ThemeProvider>

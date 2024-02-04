@@ -8,6 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CenterBox from "../components/CenterBox";
 import { getTenant } from "../firebase.js";
+import CreateTenantListingForm from "../components/CreateTenantListingForm.js";
 
 const Landing = ({ user, setPage }) => {
   // Doc Id
@@ -18,6 +19,7 @@ const Landing = ({ user, setPage }) => {
   const toggleViewing = () => {
     setViewingMatches(!viewingMatches);
   };
+  const [viewingModal, setViewingModal] = useState(false);
   const viewMatches = () => {
     setPage("matches");
   };
@@ -102,7 +104,7 @@ const Landing = ({ user, setPage }) => {
               <Button
                 variant="outlined"
                 startIcon={<AddIcon />}
-                onClick={() => {}}
+                onClick={() => setViewingModal(true)}
               >
                 Add Posting
               </Button>
@@ -141,6 +143,10 @@ const Landing = ({ user, setPage }) => {
           </CenterBox>
         </Grid>
       </Grid>
+
+      {viewingModal && (
+        <CreateTenantListingForm handleClose={() => setViewingModal(false)} />
+      )}
     </Page>
   );
 };

@@ -32,8 +32,10 @@ function priceRangeText(value) {
   return `$${value}`;
 }
 
-export default function CreateTenantListingForm() {
-  const [open, setOpen] = React.useState(false);
+const CreateTenantListingForm = ({
+  handleClose
+}) => {
+  const [open, setOpen] = React.useState(true);
 
   const [priceRange, setPriceRange] = React.useState([0, 50]);
   const [occupant, setOccupant] = React.useState(false);
@@ -94,15 +96,14 @@ export default function CreateTenantListingForm() {
     setFurnshed(event.target.value);
   };
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   return (
     <>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={() => {
+          setOpen(false);
+          handleClose();
+        }}
         aria-labelledby="tenant-create-listing-modal"
         aria-describedby="create-listing-as-tenant"
       >
@@ -343,3 +344,5 @@ export default function CreateTenantListingForm() {
     </>
   );
 }
+
+export default CreateTenantListingForm;
