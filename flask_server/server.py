@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask import jsonify
+from model import predict
 
 app = Flask(__name__)
 
@@ -15,20 +16,22 @@ def match():
         data = request.json
 
         # pull out request
-        tenant_listing = data.get('TenantListing')
+        tenantListing = data.get('TenantListing')
+        tl = [tenantListing["furnished"], tenantListing["smoker"], tenantListing["pets"], tenantListing["rentPrice"], tenantListing["squareFeet"]]
+
         landlords = data.get('Landlords')
 
-        numLanlords = (len(landlords))
+        matches = []
+        for ll in landlords:
+            data = [tl[0], tl[1], tl[2], ll["furnished"], ll["smoker"], ll["pets"], tl[3], ll["rentPrice"], tl[4], ll["squareFeet"]]
+            matches.append(predict(data))
+        
 
-        # logic TODO
-        print(tenant_listing)
-        for landlord in landlords:
-            print(landlord)
+        response = {"matches": matches}
+        return response, 200
 
-        # match responses - array of 0 or 1 corresponding
-        response = {
-            "matches": [0, 1, 1]
-        }
+        
+
 
         return jsonify(response), 200
 
