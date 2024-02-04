@@ -30,11 +30,10 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const TinderCards = ({
+const TinderCards2 = ({
   cardInfo,
   docId,
   onSwipeRight,
-  type
 }) => {
 
   // Expands Controls
@@ -43,12 +42,11 @@ const TinderCards = ({
     setExpanded(!expanded);
   };
 
-  // Background Image and Details
-  const backgroundImageUrl = ["/utils/maheeka.jpg", "/utils/kevin.jpg"];
-  const name = `${cardInfo.firstName} ${cardInfo.lastName}`;
-  const profession = `${cardInfo.profession}`;
-  let initals = `${cardInfo.firstName[0]}${cardInfo.lastName[0]}`;
-  initals.toUpperCase();
+  const backgroundImageUrl = "/utils/maheeka.jpg";
+  const address = `${cardInfo.address}`;
+  const location = `${cardInfo.location}`;
+  const bio = `${cardInfo.bio}`;
+  const price = `${cardInfo.price}`;
 
   // Random Colour
   const getRandomDarkColor = () => {
@@ -60,7 +58,7 @@ const TinderCards = ({
   // Handle Right Swipe
   const handleRightSwipe = () => {
     // Trigger the callback with the updated documentId
-    onSwipeRight(docId, "tenants");
+    onSwipeRight(docId, "houses");
   };
 
   return (
@@ -72,7 +70,7 @@ const TinderCards = ({
       }}
     >
       <Button
-        sx={{ height: 550, width: 75 }}
+        sx={{ height: 400, width: 75 }}
         onClick={handleRightSwipe}
         variant="contained"
       >
@@ -81,8 +79,8 @@ const TinderCards = ({
       <Card
         sx={{
           maxWidth: 400,
-          height: 550,
-          backgroundImage: `url(${backgroundImageUrl[docId - 1]})`,
+          height: 400,
+          backgroundImage: `url(${backgroundImageUrl})`,
           backgroundSize: "cover",
         }}
       >
@@ -90,7 +88,7 @@ const TinderCards = ({
           sx={{ backgroundColor: "lightblue" }}
           avatar={
             <Avatar sx={{ bgcolor: darkTextColor }} aria-label="recipe">
-              {initals}
+              {'H'}
             </Avatar>
           }
           action={
@@ -98,37 +96,35 @@ const TinderCards = ({
               <MoreVertIcon />
             </IconButton>
           }
-          title={name}
-          subheader={profession}
         />
         <CardMedia
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "60%",
+            height: "50%",
             width: "100%",
             border: "none",
           }}
           component="img"
           height="flex"
         />
-        <CardContent sx={{ backgroundColor: "lightblue", marginTop: 'auto' }}>
+        <CardContent sx={{ backgroundColor: "lightblue" }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            <b>About Me: </b>
-            {cardInfo.bio}
+            <b>Address: </b>
+            {address}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Rating: </b>
-            {cardInfo.rating}/10
+            <b>Location: </b>
+            {location}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Price Preference: </b>${cardInfo.ppl} - ${cardInfo.pph} CAD
+            <b>Price: </b>{price} CAD
           </Typography>
         </CardContent>
       </Card>
       <Button
-        sx={{ height: 550, width: 75 }}
+        sx={{ height: 400, width: 75 }}
         onClick={handleRightSwipe}
         variant="contained"
       >
@@ -138,4 +134,8 @@ const TinderCards = ({
   );
 }
 
-export default TinderCards;
+export default TinderCards2;
+
+
+
+

@@ -50,10 +50,10 @@ async function createTenantListing(tenantListing) {
 }
 
 // Get the next tenant
-async function getTenant(docId) {
+async function getAsset(docId, collectionName) {
   let retval;
   try {
-    const querySnapshot = await getDocs(collection(db, "tenants"));
+    const querySnapshot = await getDocs(collection(db, collectionName));
     
     if (!querySnapshot.empty) {
       retval = querySnapshot.docs[docId].data();
@@ -65,4 +65,4 @@ async function getTenant(docId) {
   return retval;
 }
 
-export { addLandlord, createTenantListing, getTenant};
+export { addLandlord, createTenantListing, getAsset };
