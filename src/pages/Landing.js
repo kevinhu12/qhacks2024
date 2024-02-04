@@ -7,16 +7,23 @@ import TinderCards from "../components/TinderCards";
 import AddIcon from "@mui/icons-material/Add";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CenterBox from "../components/CenterBox";
-import { getTenant } from "../firebase.js";
+import { getAsset } from "../firebase.js";
 import CreateTenantListingForm from "../components/CreateTenantListingForm.js";
+import axios from 'axios';
+import TinderCards2 from '../components/TinderCards2.js';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Landing = ({ user, setPage }) => {
   // Doc Id
   const [docId, setDocId] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   // Viewing Matches
   const [viewingMatches, setViewingMatches] = useState(true);
   const toggleViewing = () => {
+    setLoading(true);
+    setDocId(0);
     setViewingMatches(!viewingMatches);
   };
   const [viewingModal, setViewingModal] = useState(false);
@@ -42,33 +49,70 @@ const Landing = ({ user, setPage }) => {
     const fetchData = async () => {
       try {
 
-        async function GetMatches() {
-            axios.get(`https://catfact.ninja/fact`)
-            .then(res => {
-                setMatches(res.data);
-            })
-        } 
-        GetMatches();
+        // async function GetMatches() {
+        //   axios.get(`https://127.0.0.1:5000`).then(res => { setMatches(res.data) })
+        //     // axios.post(
+        //     //   `https://127.0.0.1:5000/match`, 
+        //     //   {
+        //     //     TenantListing: {
+        //     //       rentPrice: 1000,
+        //     //       squareFeet: 1000,
+        //     //       smoker: false,
+        //     //       pets: false,
+        //     //       furnished: true
+        //     //     },
+        //     //     Landlords: [
+        //     //       {
+        //     //         rentPrice: 1001,
+        //     //         squareFeet: 1001,
+        //     //         smoker: false,
+        //     //         pets: false,
+        //     //         furnished: false
+        //     //       },
+        //     //       {
+        //     //         rentPrice: 1002,
+        //     //         squareFeet: 1002,
+        //     //         smoker: false,
+        //     //         pets: true,
+        //     //         furnished: false
+        //     //       }
+        //     //     ]
+        //     //   },
+        //     //   {
+        //     //     headers: {
+        //     //       'Content-Type': 'application/json'
+        //     //     }
+        //     //   }
+        //     // )
+        //     // .then(res => {
+        //     //     setMatches(res.data);
+        //     // })
+        // } 
+        // GetMatches();
 
-        const tenantData = await getTenant(docId);
+        const tenantData = viewingMatches ? await getAsset(docId, "houses") : await getAsset(docId, "tenants");
         setCardInfo(tenantData);
 
         const incrementedDocId = docId + 1;
         setDocId(incrementedDocId);
+
+        setLoading(false);
       } catch (error) {
         console.error("Error getting tenant data:", error);
       }
     };
 
     fetchData(); // Call the fetchData function when the component mounts
-  }, []);
+  }, [viewingMatches]);
 
   // Callback function to be passed to TinderCard
-  const handleSwipeCallback = async (newDocumentId) => {
-    const tenantData = await getTenant(newDocumentId);
-    setCardInfo(tenantData);
+  const handleSwipeCallback = async (newDocumentId, type) => {
+    setLoading(true);
+    const assetData = await getAsset(newDocumentId, type);
+    setCardInfo(assetData);
     const incrementedDocId = docId + 1;
     setDocId(incrementedDocId);
+    setLoading(false);
   };
   return (
     <Page>
@@ -108,7 +152,7 @@ const Landing = ({ user, setPage }) => {
         >
           <CenterBox>
             {viewingMatches ? (
-              <Button variant="outlined" onClick={() => viewMatches()}>
+              <Button startIcon={<SearchIcon />} variant="outlined" onClick={() => viewMatches() }>
                 View my matches
               </Button>
             ) : (
@@ -126,18 +170,18 @@ const Landing = ({ user, setPage }) => {
         {/* Available postings or the user's postings */}
         <Grid item xs={12}>
           <CenterBox>
-            {viewingMatches && cardInfo ? (
+            {!loading && viewingMatches && cardInfo ? (
               <>
                 <Typography color="primary" padding="0.75rem">
                   Recommended Matches
                 </Typography>
-                <TinderCards
+                <TinderCards2
                   cardInfo={cardInfo}
                   docId={docId}
-                  onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
+                  onSwipeRight={(newDocId, type) => handleSwipeCallback(newDocId, type)}
                 />
               </>
-            ) : cardInfo ? (
+            ) : !loading && cardInfo ? (
               <>
                 <Typography color="primary" padding="0.75rem">
                   Your Active Postings
@@ -145,7 +189,7 @@ const Landing = ({ user, setPage }) => {
                 <TinderCards
                   cardInfo={cardInfo}
                   docId={docId}
-                  onSwipeRight={(newDocId) => handleSwipeCallback(newDocId)}
+                  onSwipeRight={(newDocId, type) => handleSwipeCallback(newDocId, type)}
                 />
               </>
             ) : (

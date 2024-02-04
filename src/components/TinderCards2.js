@@ -19,8 +19,21 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import { Button } from "@mui/material";
 import { getTenant } from "../firebase";
 
-const MatchCards = ({
-  cardInfo
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+const TinderCards2 = ({
+  cardInfo,
+  docId,
+  onSwipeRight,
 }) => {
 
   // Expands Controls
@@ -29,11 +42,20 @@ const MatchCards = ({
     setExpanded(!expanded);
   };
 
-  const backgroundImageUrl = "/utils/house1.jpeg";
+  const backgroundImageUrl = ["/utils/house1.jpeg", "/utils/house2.jpeg","/utils/house3.jpeg"];
   const address = `${cardInfo.address}`;
   const location = `${cardInfo.location}`;
   const bio = `${cardInfo.bio}`;
   const price = `${cardInfo.price}`;
+  const rating = `${cardInfo.rating}`;
+
+  // Initals
+  const generateRandomLetter = () => {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const randomIndex = Math.floor(Math.random() * alphabet.length);
+    return alphabet[randomIndex];
+  };
+  const initals = generateRandomLetter() + generateRandomLetter();
 
   // Random Colour
   const getRandomDarkColor = () => {
@@ -42,17 +64,33 @@ const MatchCards = ({
   };
   const darkTextColor = getRandomDarkColor();
 
+  // Handle Right Swipe
+  const handleRightSwipe = () => {
+    // Trigger the callback with the updated documentId
+    onSwipeRight(docId, "houses");
+  };
+
   return (
     <Box
       sx={{
-        display: "flex"
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
+      <Button
+        sx={{ height: 500, width: 75 }}
+        onClick={handleRightSwipe}
+        variant="contained"
+      >
+        <KeyboardDoubleArrowLeftIcon />
+      </Button>
       <Card
         sx={{
+          flexDirection:'column',
           maxWidth: 400,
-          height: 400,
-          backgroundImage: `url(${backgroundImageUrl})`,
+          height: "100%",
+          backgroundImage: `url(${backgroundImageUrl[docId - 1]})`,
           backgroundSize: "cover",
         }}
       >
@@ -60,7 +98,7 @@ const MatchCards = ({
           sx={{ backgroundColor: "lightblue" }}
           avatar={
             <Avatar sx={{ bgcolor: darkTextColor }} aria-label="recipe">
-              {'H'}
+              {initals}
             </Avatar>
           }
           action={
@@ -68,35 +106,51 @@ const MatchCards = ({
               <MoreVertIcon />
             </IconButton>
           }
+          title={address}
+          subheader={location}
         />
         <CardMedia
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "50%",
+            height: 300,
             width: "100%",
             border: "none",
           }}
           component="img"
           height="flex"
         />
+                  <Box sx={{ flexGrow: 5 }}>
+    {/* This div will take the remaining space */}
+  </Box>
         <CardContent sx={{ backgroundColor: "lightblue" }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            <b>Address: </b>
-            {address}
+            <b>Summary: </b>
+            {bio}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Location: </b>
-            {location}
+            <b>Rating:  </b>
+            {rating} / 10
           </Typography>
           <Typography variant="body2" color="text.secondary">
             <b>Price: </b>{price} CAD
           </Typography>
         </CardContent>
       </Card>
+      <Button
+        sx={{ height: 500, width: 75 }}
+        onClick={handleRightSwipe}
+        variant="contained"
+      >
+        <KeyboardDoubleArrowRightIcon />
+      </Button>
     </Box>
   );
 }
 
-export default MatchCards;
+export default TinderCards2;
+
+
+
+

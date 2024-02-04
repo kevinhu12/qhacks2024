@@ -33,9 +33,10 @@ const ExpandMore = styled((props) => {
 const TinderCards = ({
   cardInfo,
   docId,
-  onSwipeRight
+  onSwipeRight,
+  type
 }) => {
-
+  
   // Expands Controls
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -43,9 +44,12 @@ const TinderCards = ({
   };
 
   // Background Image and Details
-  const backgroundImageUrl = ["/utils/maheeka.jpg", "/utils/kevin.jpg"];
+  const backgroundImageUrl = "/utils/maheeka.jpg";
   const name = `${cardInfo.firstName} ${cardInfo.lastName}`;
+  console.log(name);
   const profession = `${cardInfo.profession}`;
+  const location = `${cardInfo.location}`;
+  const price = `${cardInfo.price}`;
   let initals = `${cardInfo.firstName[0]}${cardInfo.lastName[0]}`;
   initals.toUpperCase();
 
@@ -59,7 +63,7 @@ const TinderCards = ({
   // Handle Right Swipe
   const handleRightSwipe = () => {
     // Trigger the callback with the updated documentId
-    onSwipeRight(docId);
+    onSwipeRight(docId, "tenants");
   };
 
   return (
@@ -71,7 +75,7 @@ const TinderCards = ({
       }}
     >
       <Button
-        sx={{ height: 550, width: 75 }}
+        sx={{ height: 500, width: 75 }}
         onClick={handleRightSwipe}
         variant="contained"
       >
@@ -79,10 +83,11 @@ const TinderCards = ({
       </Button>
       <Card
         sx={{
+          flexDirection:'column',
           maxWidth: 400,
-          height: 550,
-          backgroundImage: `url(${backgroundImageUrl[docId - 1]})`,
-          backgroundSize: "cover",
+          height: "100%",
+          backgroundImage: `url(${backgroundImageUrl})`,
+          backgroundSize: "contain",
         }}
       >
         <CardHeader
@@ -105,61 +110,35 @@ const TinderCards = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "60%",
+            minHeight: 300,
             width: "100%",
             border: "none",
           }}
           component="img"
           height="flex"
         />
-        <CardContent sx={{ backgroundColor: "lightblue", marginTop: 'auto' }}>
+          <Box sx={{ flexGrow: 5 }}>
+    {/* This div will take the remaining space */}
+  </Box>
+        <CardContent sx={{ backgroundColor: "lightblue" }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             <b>About Me: </b>
             {cardInfo.bio}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <b>Location Interested: </b>{location}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             <b>Rating: </b>
             {cardInfo.rating}/10
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Price Preference: </b>${cardInfo.ppl} - ${cardInfo.pph} CAD
+            <b>Price Preference: </b>${price} CAD
           </Typography>
         </CardContent>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron
-              and set aside for 10 minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-              over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-              stirring occasionally until lightly browned, 6 to 8 minutes.
-              Transfer shrimp to a large plate and set aside, leaving chicken
-              and chorizo in the pan. Add pimentón, bay leaves, garlic,
-              tomatoes, onion, salt and pepper, and cook, stirring often until
-              thickened and fragrant, about 10 minutes. Add saffron broth and
-              remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes
-              and peppers, and cook without stirring, until most of the liquid
-              is absorbed, 15 to 18 minutes. Reduce heat to medium-low, add
-              reserved shrimp and mussels, tucking them down into the rice, and
-              cook again without stirring, until mussels have opened and rice is
-              just tender, 5 to 7 minutes more. (Discard any mussels that
-              don&apos;t open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then
-              serve.
-            </Typography>
-          </CardContent>
-        </Collapse>
       </Card>
       <Button
-        sx={{ height: 550, width: 75 }}
+        sx={{ height: 500, width: 75 }}
         onClick={handleRightSwipe}
         variant="contained"
       >
