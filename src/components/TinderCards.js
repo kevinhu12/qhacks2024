@@ -30,14 +30,6 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-// export default function TinderCard(info, documentId, onSwipeRight) {
-//   const { cardInfo } = info;
-//   const { docId } = documentId;
-//   const { onSwipeRight } = onSwipeRight;
-//   console.log(documentId);
-//   console.log(typeof docId);
-//   console.log(typeof onSwipeRight);
-
 const TinderCards = ({
   cardInfo,
   docId,
