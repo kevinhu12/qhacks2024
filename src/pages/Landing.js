@@ -36,9 +36,20 @@ const Landing = ({ user, setPage }) => {
   };
 
   const [cardInfo, setCardInfo] = useState(null);
+  const [matches, setMatches] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+
+        async function GetMatches() {
+            axios.get(`https://catfact.ninja/fact`)
+            .then(res => {
+                setMatches(res.data);
+            })
+        } 
+        GetMatches();
+
         const tenantData = await getTenant(docId);
         setCardInfo(tenantData);
 
