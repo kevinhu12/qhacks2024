@@ -134,6 +134,7 @@ const CreateTenantListingForm = ({
                       </Grid>
                       <Grid item xs={10}>
                         <Slider
+                          color='secondary'
                           getAriaLabel={() => 'Price range'}
                           value={priceRange}
                           onChange={handlePriceRange}
