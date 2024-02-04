@@ -48,13 +48,37 @@ const Landing = ({ user, setPage }) => {
     const fetchData = async () => {
       try {
 
-        // async function GetMatches() {
-        //     axios.get(`https://catfact.ninja/fact`)
-        //     .then(res => {
-        //         setMatches(res.data);
-        //     })
-        // } 
-        // GetMatches();
+        async function GetMatches() {
+            axios.post(`https://127.0.0.1:5000/match`, {
+              tenant: {
+                rentPrice: 1000,
+                squareFeet: 1000,
+                smoker: false,
+                pets: false,
+                furnished: true
+              },
+              landlords: [
+                {
+                  rentPrice: 1001,
+                  squareFeet: 1001,
+                  smoker: false,
+                  pets: false,
+                  furnished: false
+                },
+                {
+                  rentPrice: 1002,
+                  squareFeet: 1002,
+                  smoker: false,
+                  pets: true,
+                  furnished: false
+                }
+              ]
+            })
+            .then(res => {
+                setMatches(res.data);
+            })
+        } 
+        GetMatches();
 
         const tenantData = viewingMatches ? await getAsset(docId, "houses") : await getAsset(docId, "tenants");
         setCardInfo(tenantData);
