@@ -61,14 +61,10 @@ export default function TinderCard(info) {
         alignItems: "center"
       }}
     >
-      <Button sx={{ height: 400, width: 75 }} variant="contained">
-        <KeyboardDoubleArrowLeftIcon />
-      </Button>
       <Card
         sx={{
           maxWidth: 400,
           height: 400,
-          backgroundImage: `url(${backgroundImageUrl})`,
           backgroundSize: "cover",
         }}
       >
@@ -145,9 +141,6 @@ export default function TinderCard(info) {
           </CardContent>
         </Collapse>
       </Card>
-      <Button sx={{ height: 400, width: 75 }} variant="contained">
-        <KeyboardDoubleArrowRightIcon />
-      </Button>
     </Box>
   );
 }

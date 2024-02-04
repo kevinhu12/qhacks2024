@@ -1,17 +1,25 @@
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import React, { useState, useEffect } from 'react';
 import Page from '../components/Page';
+import TinderCards from '../components/TinderCards';
+import AddIcon from '@mui/icons-material/Add';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CenterBox from '../components/CenterBox';
+import { getTenant } from '../firebase.js';
 
 const Landing = ({
     user,
-    theme
+    setPage
 }) => {
-    const [text, setText] = useState("");
-
-    const [x, setX] = useState(1);
+    const [viewingMatches, setViewingMatches] = useState(true);
+    const toggleViewing = () => {
+        setViewingMatches(!viewingMatches);
+    }
+    const viewMatches = () => {
+        setPage("matches");
+    }
 
     user = {
         firstName: "Kev",
@@ -24,43 +32,86 @@ const Landing = ({
         accountType: "tenant"
     }
 
+    const [cardInfo, setCardInfo] = useState(null);
     useEffect(() => {
-    }, []);
+        const fetchData = async () => {
+          try {
+            const tenantData = await getTenant();
+            setCardInfo(tenantData);
+          } catch (error) {
+            console.error('Error getting tenant data:', error);
+          }
+        };
+    
+        fetchData(); // Call the fetchData function when the component mounts
+      }, []);
 
     return (
         <Page>
-            <Typography>
-            {`Hello ${user.firstName} ${user.lastName}!`}
-            </Typography>
-            <Button
-                        onClick={() => { }}
-                    >
-                        Browse postings
-                    </Button>
-                    <Button
-                        onClick={() => { }}
-                    >
-                        See messages
-                    </Button>
-            {/* <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    {`Hello ${user.firstName} ${user.lastName}!`}
+            <Grid
+                container
+                spacing={2}
+                padding='1rem'
+                sx={{ minHeight: '100vh' }}
+            >
+                <Grid item xs={1} />
+                <Grid item xs={10}>
+                    <CenterBox>
+                        <Typography color='primary' paddingBottom='7rem'>
+                            {`Hello ${user.firstName} ${user.lastName}!`}
+                        </Typography>
+                    </CenterBox>
                 </Grid>
-                <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid item xs={1}>
                     <Button
-                        onClick={() => { }}
-                    >
-                        Browse postings
-                    </Button>
+                        startIcon={<SettingsIcon />}
+                    />
                 </Grid>
-                <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button
-                        onClick={() => { }}
-                    >
-                        See messages
-                    </Button>
+
+                {/* Toggle view mode */}
+                <Grid item xs={6}>
+                    <CenterBox>
+                        <Button
+                            onClick={() => toggleViewing()}
+                        >
+                            Change viewing mode
+                        </Button>
+                    </CenterBox>
                 </Grid>
-            </Grid> */}
+
+                {/* Add postings or view matches */}
+                <Grid item xs={6}>
+                    <CenterBox>
+                        {viewingMatches ? (
+                            <Button
+                                onClick={() => viewMatches()}
+                            >
+                                View my matches
+                            </Button>
+                        ) : (
+                            <Button
+                                startIcon={<AddIcon />}
+                                onClick={() => {}}
+                            >
+                                Add Posting
+                            </Button>
+                        )}
+                        
+                    </CenterBox>
+                </Grid>
+
+                {/* Available postings or the user's postings */}
+                <Grid item xs={12}>
+                    <CenterBox>
+                        {(viewingMatches && cardInfo) ? (
+                            <TinderCards cardInfo={cardInfo} />
+                        ) : cardInfo ? (
+                            <TinderCards cardInfo={cardInfo} />
+                        ) : <></> } 
+                    </CenterBox>
+                </Grid>
+
+            </Grid>
         </Page>
     )
 }
