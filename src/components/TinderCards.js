@@ -43,7 +43,7 @@ const TinderCards = ({
   };
 
   // Background Image and Details
-  const backgroundImageUrl = "/utils/maheeka.jpg";
+  const backgroundImageUrl = ["/utils/maheeka.jpg", "/utils/kevin.jpg"];
   const name = `${cardInfo.firstName} ${cardInfo.lastName}`;
   const profession = `${cardInfo.profession}`;
   let initals = `${cardInfo.firstName[0]}${cardInfo.lastName[0]}`;
@@ -71,7 +71,7 @@ const TinderCards = ({
       }}
     >
       <Button
-        sx={{ height: 400, width: 75 }}
+        sx={{ height: 550, width: 75 }}
         onClick={handleRightSwipe}
         variant="contained"
       >
@@ -80,8 +80,8 @@ const TinderCards = ({
       <Card
         sx={{
           maxWidth: 400,
-          height: 400,
-          backgroundImage: `url(${backgroundImageUrl})`,
+          height: 550,
+          backgroundImage: `url(${backgroundImageUrl[docId - 1]})`,
           backgroundSize: "cover",
         }}
       >
@@ -105,14 +105,14 @@ const TinderCards = ({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "50%",
+            height: "60%",
             width: "100%",
             border: "none",
           }}
           component="img"
           height="flex"
         />
-        <CardContent sx={{ backgroundColor: "lightblue" }}>
+        <CardContent sx={{ backgroundColor: "lightblue", marginTop: 'auto' }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             <b>About Me: </b>
             {cardInfo.bio}
@@ -159,7 +159,7 @@ const TinderCards = ({
         </Collapse>
       </Card>
       <Button
-        sx={{ height: 400, width: 75 }}
+        sx={{ height: 550, width: 75 }}
         onClick={handleRightSwipe}
         variant="contained"
       >
