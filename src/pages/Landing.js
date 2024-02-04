@@ -16,9 +16,13 @@ const Landing = ({ user, setPage }) => {
   // Doc Id
   const [docId, setDocId] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   // Viewing Matches
   const [viewingMatches, setViewingMatches] = useState(true);
   const toggleViewing = () => {
+    setLoading(true);
+    setDocId(0);
     setViewingMatches(!viewingMatches);
   };
   const [viewingModal, setViewingModal] = useState(false);
@@ -44,33 +48,37 @@ const Landing = ({ user, setPage }) => {
     const fetchData = async () => {
       try {
 
-        async function GetMatches() {
-            axios.get(`https://catfact.ninja/fact`)
-            .then(res => {
-                setMatches(res.data);
-            })
-        } 
-        GetMatches();
+        // async function GetMatches() {
+        //     axios.get(`https://catfact.ninja/fact`)
+        //     .then(res => {
+        //         setMatches(res.data);
+        //     })
+        // } 
+        // GetMatches();
 
         const tenantData = viewingMatches ? await getAsset(docId, "houses") : await getAsset(docId, "tenants");
         setCardInfo(tenantData);
 
         const incrementedDocId = docId + 1;
         setDocId(incrementedDocId);
+
+        setLoading(false);
       } catch (error) {
         console.error("Error getting tenant data:", error);
       }
     };
 
     fetchData(); // Call the fetchData function when the component mounts
-  }, []);
+  }, [viewingMatches]);
 
   // Callback function to be passed to TinderCard
   const handleSwipeCallback = async (newDocumentId, type) => {
+    setLoading(true);
     const assetData = await getAsset(newDocumentId, type);
     setCardInfo(assetData);
     const incrementedDocId = docId + 1;
     setDocId(incrementedDocId);
+    setLoading(false);
   };
   return (
     <Page>
@@ -128,7 +136,7 @@ const Landing = ({ user, setPage }) => {
         {/* Available postings or the user's postings */}
         <Grid item xs={12}>
           <CenterBox>
-            {viewingMatches && cardInfo ? (
+            {!loading && viewingMatches && cardInfo ? (
               <>
                 <Typography color="primary" padding="0.75rem">
                   Recommended Matches
@@ -139,7 +147,7 @@ const Landing = ({ user, setPage }) => {
                   onSwipeRight={(newDocId, type) => handleSwipeCallback(newDocId, type)}
                 />
               </>
-            ) : cardInfo ? (
+            ) : !loading && cardInfo ? (
               <>
                 <Typography color="primary" padding="0.75rem">
                   Your Active Postings
